@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+    # PHP service
+    app:
+        build: ./config/php
+        container_name: php-app
+        working_dir: /var/www/html
+        volumes:
+            - ./www/:/var/www/html
+      
+    # MSSQL database service
+    sqlserver:
+    #build: ./sqlserver
+        container_name: sql_server
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        user: root 
+    #hostname: localhost
+        ports:
+            - 1434:1433
+        environment:
+            ACCEPT_EULA: Y
+            SA_PASSWORD: $${DB_PASSWORD}
+        env_file:
+            - ./config/.env
+        volumes:
+            - ./db:/var/opt/mssql/data
+            #- mssql-data:/var/opt/mssql/data     
+    
+      
+
+    # Nginx service
+    nginx:
+        image: nginx:alpine
+        container_name: php-nginx
+        ports:
+            - 8000:80
+        volumes:
+            - ./www/:/var/www/html
+            - ./config/nginx/:/etc/nginx/conf.d/
+
+# volumes:
+#   mssql-data:
+#     driver: local
+#     driver_opts:
+#       type: 'none'
+#       o: 'bind'
+#       device: 'C:\Docker_Volumes\stego_as\mssql'
