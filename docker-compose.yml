@@ -12,8 +12,7 @@ services:
     sqlserver:
     #build: ./sqlserver
         container_name: sql_server
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        user: root 
+        image: mcr.microsoft.com/mssql/server:2019-latest 
     #hostname: localhost
         ports:
             - 1434:1433
