@@ -21,7 +21,7 @@ services:
             ACCEPT_EULA: Y
             SA_PASSWORD: $${DB_PASSWORD}
         env_file:
-            - ./config/.env
+            - ./config/password.env
         volumes:
             - ./db:/var/opt/mssql/data
             #- mssql-data:/var/opt/mssql/data     
